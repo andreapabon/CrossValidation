@@ -28,6 +28,11 @@ public class naives {
     
    public naives(){
        datosPacientes = new ArrayList<Paciente>();
+       String comando = "SELECT * FROM datasetNormalizado" ;
+       ResultSet resultado = modelo.buscarDatos(comando);
+        if (resultado != null) {
+           dataSet = resultado;
+        }
    }
    
   // <editor-fold defaultstate="collapsed" desc="Algorítmo para encontrar los K-Vecinos">
