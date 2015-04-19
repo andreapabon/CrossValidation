@@ -21,8 +21,7 @@ import java.util.logging.Logger;
  */
 public class naives {
     private ModeloPostgres modelo = new ModeloPostgres();
-     //ResultSet pacientes; // normalizada
-     ResultSet dataSet;//bd
+    ResultSet dataSet;//bd
     ArrayList<Paciente>  datosPacientes;
     // <editor-fold defaultstate="collapsed" desc="Your Fold Comment">
     // </editor-fold>
@@ -30,21 +29,8 @@ public class naives {
    public naives(){
        datosPacientes = new ArrayList<Paciente>();
    }
-  
-   public void llenarDataSet(){
-       String comando = "SELECT * FROM datasetNormalizado" ;
-        ResultSet resultado = modelo.buscarDatos(comando);
-       // try {
-                if (resultado != null) {
-                    dataSet = resultado;
-                   // normalizar();
-                    System.out.println("entro");
-                }
-           /* } catch (SQLException ex) {
-                Logger.getLogger(naives.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
-   }
    
+  // <editor-fold defaultstate="collapsed" desc="Algorítmo para encontrar los K-Vecinos">
     // k = número de vecinos
    public ArrayList<Paciente> kVecinos(int k, Paciente t) {
        ArrayList<Paciente> N = new ArrayList<Paciente>();
@@ -52,17 +38,10 @@ public class naives {
        int i;
        double d1;
        double d2;
-       try {
           // System.out.println("data set " +dataSet.getDouble("bp"));
-            while (dataSet.next()) {
+            for(i = 0; i < datosPacientes.size(); i++){
                 Paciente d = new Paciente();
-                d.bp = dataSet.getDouble("bp");
-                d.colesterol = dataSet.getDouble("colesterol");
-                d.edad = dataSet.getDouble("edad");
-                d.genero = dataSet.getDouble("sexo");
-                d.potasio = dataSet.getDouble("potasio");
-                d.sodio = dataSet.getDouble("sodio");
-                d.droga = dataSet.getString("drogra");
+               d = datosPacientes.get(i);
                // System.out.println(d.getBp() + " " + d.getDroga());
                 if(tam < k){
                     System.out.println("tamaño if: " + tam);
@@ -84,9 +63,7 @@ public class naives {
                     }
                 }
             }
-       }catch (SQLException ex) {
-            Logger.getLogger(naives.class.getName()).log(Level.SEVERE, null, ex);
-       }
+      
        System.out.println("VECIOSssssssssssss " + N.size());
        System.out.println(N);
        System.out.println("*********************************************************");
@@ -213,49 +190,9 @@ public class naives {
        }
        return distEuclidiana;
    }
-   
-  /* public void normalizar (){
-        try {
-                if (dataSet != null) {
-                    while (dataSet.next()) {
-                        edad = min_max(minEdad, maxEdad, dataSet.getDouble("edad"));
-                        if(dataSet.getString("sexo") == "F")
-                            sexo = 1;
-                        else 
-                            sexo = 0;
-                        if(dataSet.getString("bp") == "LOW") 
-                            bp = 0.33;
-                        else {
-                            if(dataSet.getString("bp") == "NORMAL")
-                                bp = 0.66;
-                            else 
-                                bp = 0.99;
-                        }
-                        if(dataSet.getString("colesterol") == "NORMAL")
-                            colesterol = 1;
-                        else 
-                            colesterol = 0;
-                        sodio = min_max(minSodio, maxSodio, dataSet.getDouble("sodio"));
-                        potasio = min_max(maxPotasio, minPotasio, dataSet.getDouble("potasio"));
-                        droga = dataSet.getString("droga");
-                        pacientes.moveToInsertRow(); 
-                        pacientes.updateDouble(1, edad);
-                        pacientes.updateDouble(2, sexo);
-                        pacientes.updateDouble(3, bp);
-                        pacientes.updateDouble(4, colesterol);
-                        pacientes.updateDouble(5, sodio);
-                        pacientes.updateDouble(6, potasio);
-                        pacientes.updateString(7, droga);
-                        pacientes.insertRow();
-                        pacientes.moveToCurrentRow();
-                    }
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(naives.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        
-    }
-   */
+   // </editor-fold>
+ 
+   // <editor-fold defaultstate="collapsed" desc="Algorítmo para Normalizar un Paciente">
    public Paciente normalizarPaciente(double edadP, String sex, String bpP, String colesterolP, double naP, double kP ){
         double sodio;
         double edad;
@@ -338,5 +275,6 @@ public class naives {
         System.out.println("Num " + numerador + " Den: " + denominador);
         return numerador / denominador; 
     }
+    // </editor-fold>
     
 }
