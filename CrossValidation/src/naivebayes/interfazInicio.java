@@ -5,9 +5,13 @@
  */
 package naivebayes;
 
+import Controlador.CrossValidation;
 import Controlador.Paciente;
 import Controlador.naives;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -192,39 +196,13 @@ public class interfazInicio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalcularActionPerformed
-      naives n = new naives();
-      //double edad, double genero, double colesterol, double sodio, double potasio, double bp, String droga
-     //Paciente p = new Paciente(0.135593220, 1,0.99, 0,0.792535,0.031258, "");
-      //Paciente p = new Paciente(0.542372881355932,0 ,0.33, 0,0.739309, 0.056468, "");
-      
-     // Paciente p = new Paciente(0.220338983050847, 1,0.66, 0,0.563682,0.072289, "");
-         Paciente p = new Paciente();
-        double sodio;
-        int edad;
-        String sexo;
-        String bp;
-        String colesterol;
-        double potasio; 
-        int kvecinos;
-        //int edadP, String sex, String bpP, String colesterolP, double naP, double kP 
-        sodio=Double.parseDouble( txtNa.getText());
-        edad=Integer.parseInt(txtEdad.getText());
-        sexo= (String)jcbSexo.getSelectedItem();
-        bp=(String)jcbBP.getSelectedItem();
-        colesterol=(String)jcbColesterol.getSelectedItem();
-        potasio=Double.parseDouble(txtK.getText());
-        kvecinos=Integer.parseInt( jspK.getValue().toString());
-        p=n.normalizarPaciente(edad,sexo,bp,colesterol,sodio,potasio);
-        
-        System.out.println(p.getEdad() + " " + p.getGenero() + p.getBp());
-      
-         ArrayList<Paciente> listapaciente = n.kVecinos(12, p);
-      
-      
-         String droga = n.claseElemento(listapaciente, p);
-    //  System.out.print(listapaciente.size());
-        System.out.println("droga " + droga);
-        lblResultado.setText(droga);
+        try {
+            CrossValidation cv = new CrossValidation();
+            
+            System.out.println("Númerp de Vecinos : " + cv.crossValidation(1));
+        } catch (SQLException ex) {
+            Logger.getLogger(interfazInicio.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnCalcularActionPerformed
 
     private void jcbSexoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbSexoActionPerformed

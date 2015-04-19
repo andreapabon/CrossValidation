@@ -30,9 +30,18 @@ public class naives {
        datosPacientes = new ArrayList<Paciente>();
    }
    
+   public naives(ArrayList<Paciente> p){
+       System.out.println("Desde constructor: " + p.size());
+       datosPacientes = new ArrayList<Paciente>();
+       for(int i = 0; i < p.size(); i++){
+           datosPacientes.add(p.get(i));
+        }
+   }
+   
   // <editor-fold defaultstate="collapsed" desc="Algorítmo para encontrar los K-Vecinos">
     // k = número de vecinos
    public ArrayList<Paciente> kVecinos(int k, Paciente t) {
+       System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!Entró a KVecinos !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n k: " + k);
        ArrayList<Paciente> N = new ArrayList<Paciente>();
        int tam = 0;
        int i;
@@ -40,17 +49,19 @@ public class naives {
        double d2;
           // System.out.println("data set " +dataSet.getDouble("bp"));
             for(i = 0; i < datosPacientes.size(); i++){
+                System.out.println("For K Vecinos i: " + i);
                 Paciente d = new Paciente();
-               d = datosPacientes.get(i);
+                d = datosPacientes.get(i);
                // System.out.println(d.getBp() + " " + d.getDroga());
                 if(tam < k){
-                    System.out.println("tamaño if: " + tam);
+                    System.out.println("   tamaño if: " + tam);
                     N.add(tam, d);
                     tam ++;
                 }
                 else{
-                    System.out.println("Al for " + k);
+                     System.out.println("  Else k: " + k);
                     for (i = 0; i < tam; i++){
+                        System.out.println("  Desde el for interno k vecinos: " + i);
                         Paciente u = new Paciente();
                         u = N.get(i);
                         d1 = u.calcularDistanciaEuclidiana(t, u);
@@ -71,6 +82,7 @@ public class naives {
    }
    
    public String claseElemento(ArrayList<Paciente> vecinos, Paciente p){
+       System.out.println("!!!!!!!!!!!!!!!!!! Clase elemento: " + vecinos.size());
        double clase = -1;
        int tam = vecinos.size();
        int i;
